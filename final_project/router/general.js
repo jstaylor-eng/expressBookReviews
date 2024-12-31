@@ -64,8 +64,10 @@ public_users.get('/title/:title',function (req, res) {
 
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    const isbn = req.params.isbn;
+    const review = books[isbn]["reviews"]
+    // Send the filtered_users array as the response to the client
+    res.send(JSON.stringify({review}, null, 4));
 });
 
 module.exports.general = public_users;
