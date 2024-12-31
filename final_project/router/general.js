@@ -25,15 +25,41 @@ public_users.get('/isbn/:isbn',function (req, res) {
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-    const author = req.params.author;
-    // Send the isbn array as the response to the client
-    res.send(books[author]);
+    // Create books by author array
+    let bookauthor = []
+    let isbns = Object.keys(books)
+    // Search through books array and add to book author if found
+    isbns.forEach((isbn) => {
+        if (books[isbn]["author"] === req.params.author) {
+            bookauthor.push({
+                "number": isbn,
+                "title": books[isbn]["title"],
+                "reviews": books[isbn]["reviews"]
+            });
+        }
+    });
+    // Send the books by author array as the response to the client
+    res.send(JSON.stringify({bookauthor}, null, 4))
 });
+
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    // Create books by title array
+    let booktitle = []
+    let isbns = Object.keys(books)
+    // Search through books array and add to book title if found
+    isbns.forEach((isbn) => {
+        if (books[isbn]["title"] === req.params.title) {
+            booktitle.push({
+                "number": isbn,
+                "author": books[isbn]["author"],
+                "reviews": books[isbn]["reviews"]
+            });
+        }
+    });
+    // Send the books by author array as the response to the client
+    res.send(JSON.stringify({booktitle}, null, 4))
 });
 
 //  Get book review
